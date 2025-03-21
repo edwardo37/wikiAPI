@@ -34,7 +34,6 @@ namespace wikiAPI.Repositories
 
             if (includeEntries)
             {
-                Console.WriteLine("MADE IT HERE");
                 query = query.Include(wikiCategory => wikiCategory.WikiEntries);
             }
 

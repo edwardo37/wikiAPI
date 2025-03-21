@@ -17,8 +17,11 @@ namespace wikiAPI.Models
 
         // DB relational info
         public int WikiCategoryID { get; set; }
+
         // For reference in code
-        [JsonIgnore]
+
+        // When you figure out JsonIgnore 
+        // [JsonIgnore]
         public WikiCategory? WikiCategory { get; set; }
     }
 }

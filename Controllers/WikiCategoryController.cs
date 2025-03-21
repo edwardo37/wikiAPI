@@ -40,6 +40,7 @@ namespace wikiAPI.Controllers
             Console.WriteLine(includeEntries);
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
 
+            // Bandaid solution until I learn error handling
             if (categoryToGet == null)
             {
                 throw new Exception("Wiki category not found. Cannot fetch");
