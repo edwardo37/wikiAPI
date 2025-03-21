@@ -37,7 +37,14 @@ namespace wikiAPI.Controllers
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
-            return wikiRepository.GetCategoryByID(CategoryID, includeEntries);
+            WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
+
+            if (categoryToGet == null)
+            {
+                throw new Exception("Wiki category not found. Cannot fetch");
+            }
+
+            return categoryToGet;
         }
 
         [HttpPut("{CategoryID}", Name = "UpdateWikiCategory")]
@@ -51,6 +58,7 @@ namespace wikiAPI.Controllers
             }
 
             categoryToUpdate.Title = request.Title;
+            categoryToUpdate.Description = request.Description;
 
             return wikiRepository.UpdateCategory(categoryToUpdate);
         }
