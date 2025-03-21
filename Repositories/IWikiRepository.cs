@@ -82,13 +82,13 @@ namespace wikiAPI.Repositories
         /// </summary>
         /// <param name="entry">The entry to update</param>
         /// <returns>The newly updated entry</returns>
-        WikiEntry UpdateWikiEntry(WikiEntry entry);
+        WikiEntry UpdateEntry(WikiEntry entry);
 
         /// <summary>
         /// Delete an entry
         /// </summary>
         /// <param name="entry">The entry to delete</param>
-        void DeleteWikiEntry(WikiEntry entry);
+        void DeleteEntry(WikiEntry entry);
     }
     
 }

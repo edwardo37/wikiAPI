@@ -101,13 +101,13 @@ namespace wikiAPI.Repositories
                 .ToList();
         }
 
-        public WikiEntry UpdateWikiEntry(WikiEntry entry)
+        public WikiEntry UpdateEntry(WikiEntry entry)
         {
             dbContext.SaveChanges();
             return entry;
         }
 
-        public void DeleteWikiEntry(WikiEntry entry)
+        public void DeleteEntry(WikiEntry entry)
         {
             dbContext.WikiEntries.Remove(entry);
             dbContext.SaveChanges();

@@ -39,5 +39,33 @@ namespace wikiAPI.Controllers
         {
             return wikiRepository.GetCategoryByID(CategoryID, includeEntries);
         }
+
+        [HttpPut("{CategoryID}", Name = "UpdateWikiCategory")]
+        public WikiCategory? UpdateWikiCategory(int CategoryID, WikiCategoryCreateRequest request)
+        {
+            WikiCategory? categoryToUpdate = GetWikiCategory(CategoryID);
+
+            if (categoryToUpdate == null)
+            {
+                throw new Exception("Wiki cateogry not found. Cannot be updated");
+            }
+
+            categoryToUpdate.Title = request.Title;
+
+            return wikiRepository.UpdateCategory(categoryToUpdate);
+        }
+
+        [HttpDelete("{CategoryID}", Name = "DeleteWikiCategory")]
+        public void DeleteWikiCategory(int CategoryID)
+        {
+            WikiCategory? categoryToDelete = GetWikiCategory(CategoryID);
+
+            if (categoryToDelete == null)
+            {
+                throw new Exception("Wiki category not found. Cannot be deleted");
+            }
+
+            wikiRepository.DeleteCategory(categoryToDelete);
+        }
     }
 }
