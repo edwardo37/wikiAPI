@@ -5,7 +5,7 @@ using wikiAPI.Repositories;
 
 namespace wikiAPI.Controllers
 {
-    [Route("/w/Category")]
+    [Route("/Wiki/Category")]
     [ApiController]
     public class WikiCategoryController : ControllerBase
     {
@@ -37,6 +37,7 @@ namespace wikiAPI.Controllers
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
+            Console.WriteLine(includeEntries);
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
 
             if (categoryToGet == null)

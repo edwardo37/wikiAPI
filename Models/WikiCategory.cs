@@ -8,6 +8,6 @@ namespace wikiAPI.Models
         public required string Title { get; set; }
         public string? Description { get; set; }
 
-        public List<WikiEntry>? WikiEntries { get; set; }
+        public List<WikiEntry> WikiEntries { get; set; } = [];
     }
 }
