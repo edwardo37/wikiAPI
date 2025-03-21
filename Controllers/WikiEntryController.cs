@@ -5,7 +5,7 @@ using wikiAPI.Repositories;
 
 namespace wikiAPI.Controllers
 {
-    [Route("/Wiki/Entry")]
+    [Route("/Wiki/Entries")]
     [ApiController]
     public class WikiEntryController : ControllerBase
     {

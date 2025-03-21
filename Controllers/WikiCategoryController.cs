@@ -5,7 +5,7 @@ using wikiAPI.Repositories;
 
 namespace wikiAPI.Controllers
 {
-    [Route("/Wiki/Category")]
+    [Route("/Wiki/Categories")]
     [ApiController]
     public class WikiCategoryController : ControllerBase
     {

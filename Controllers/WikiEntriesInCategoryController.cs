@@ -5,13 +5,13 @@ using wikiAPI.Repositories;
 
 namespace wikiAPI.Controllers
 {
-    [Route("/Wiki/Category/{CategoryID}/Entry")]
+    [Route("/Wiki/Categories/{CategoryID}/Entries")]
     [ApiController]
-    public class WikiCategoryEntryController : ControllerBase
+    public class WikiEntriesInCategoryController : ControllerBase
     {
         private readonly IWikiRepository wikiRepository;
 
-        public WikiCategoryEntryController(IWikiRepository repository)
+        public WikiEntriesInCategoryController(IWikiRepository repository)
         {
             wikiRepository = repository;
         }
