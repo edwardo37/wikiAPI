@@ -1,6 +1,6 @@
 namespace wikiAPI.Models
 {
-    // Each category has a name, a description, stat categories to list, and a list of entries
+    // Each category has a name, a description, and a list of entries
     // As you'll see, it trickles down from category to entry
     public class WikiCategory
     {
