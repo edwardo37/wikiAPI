@@ -28,6 +28,13 @@ namespace wikiAPI.Configurations
                 errorDetails.Message = "Entity was not found.";
                 errorDetails.ExceptionMessage = exception.Message;
             }
+            // The input was invalid
+            else if (exception is InvalidInputError)
+            {
+                errorDetails.StatusCode = (int)HttpStatusCode.BadRequest;
+                errorDetails.Message = GenerateInvalidInputMessage((InvalidInputError)exception);
+                errorDetails.ExceptionMessage = exception.Message;
+            }
             // Something else
             else
             {
@@ -45,6 +52,24 @@ namespace wikiAPI.Configurations
 
             // Task completed successfully
             return true;
+        }
+
+        /// <summary>
+        /// Generates a descriptive error message with all errors in input
+        /// </summary>
+        /// <param name="exception">The exception to pass in</param>
+        /// <returns>A formatted string with the error message and all errors associated</returns>
+        private string GenerateInvalidInputMessage(InvalidInputError exception)
+        {
+            string message = exception.Message;
+
+            List<string> errors = exception.ModelState.Values.SelectMany(
+                v => v.Errors.Select(e => e.ErrorMessage)
+                ).ToList();
+
+            message = string.Join(", ", errors);
+
+            return message;
         }
     }
 }

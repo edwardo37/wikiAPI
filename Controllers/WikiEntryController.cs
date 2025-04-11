@@ -30,32 +30,46 @@ namespace wikiAPI.Controllers
         [HttpPut("{EntryID}", Name = "UpdateWikiEntry")]
         public WikiEntry? UpdateWikiEntry(int EntryID, WikiEntryCreateRequest request)
         {
-            WikiEntry? entryToUpdate = GetWikiEntry(EntryID);
-
-            if (entryToUpdate == null)
+            if (!ModelState.IsValid)
             {
-                throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
+                throw new InvalidInputError("Invalid input", ModelState);
             }
+            else
+            {
+                WikiEntry? entryToUpdate = GetWikiEntry(EntryID);
 
-            entryToUpdate.Title = request.Title;
-            entryToUpdate.Description = request.Title;
-            entryToUpdate.Sections = request.Sections;
-            entryToUpdate.Stats = request.Stats;
+                if (entryToUpdate == null)
+                {
+                    throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
+                }
 
-            return wikiRepository.UpdateEntry(entryToUpdate);
+                entryToUpdate.Title = request.Title;
+                entryToUpdate.Description = request.Title;
+                entryToUpdate.Sections = request.Sections;
+                entryToUpdate.Stats = request.Stats;
+
+                return wikiRepository.UpdateEntry(entryToUpdate);
+            }
         }
 
         [HttpDelete("{EntryID}", Name = "DeleteWikiEntry")]
         public void DeleteWikiEntry(int EntryID)
         {
-            WikiEntry? entryToDelete = GetWikiEntry(EntryID);
-
-            if (entryToDelete == null)
+            if (!ModelState.IsValid)
             {
-                throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
+                throw new InvalidInputError("Invalid input", ModelState);
             }
+            else
+            {
+                WikiEntry? entryToDelete = GetWikiEntry(EntryID);
 
-            wikiRepository.DeleteEntry(entryToDelete);
+                if (entryToDelete == null)
+                {
+                    throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
+                }
+
+                wikiRepository.DeleteEntry(entryToDelete);
+            }
         }
     }
 }

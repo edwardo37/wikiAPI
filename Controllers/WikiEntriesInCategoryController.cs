@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using wikiAPI.Controllers.Requests;
+using wikiAPI.Exceptions;
 using wikiAPI.Models;
 using wikiAPI.Repositories;
 
@@ -19,18 +20,25 @@ namespace wikiAPI.Controllers
         [HttpPost("", Name = "CreateWikiEntry")]
         public WikiEntry CreateWikiEntry([FromRoute] int CategoryID, WikiEntryCreateRequest request)
         {
-            WikiEntry newWikiEntry = new WikiEntry
+            if (!ModelState.IsValid)
             {
-                Title = request.Title,
-                Description = request.Description,
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+            else
+            {
+                WikiEntry newWikiEntry = new WikiEntry
+                {
+                    Title = request.Title,
+                    Description = request.Description,
 
-                Stats = request.Stats,
-                Sections = request.Sections,
+                    Stats = request.Stats,
+                    Sections = request.Sections,
 
-                WikiCategoryID = CategoryID
-            };
+                    WikiCategoryID = CategoryID
+                };
 
-            return wikiRepository.CreateEntry(newWikiEntry);
+                return wikiRepository.CreateEntry(newWikiEntry);
+            }
         }
 
         [HttpGet("", Name = "GetWikiEntriesByCategoryID")]
