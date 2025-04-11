@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using wikiAPI.Controllers.Requests;
+using wikiAPI.Exceptions;
 using wikiAPI.Models;
 using wikiAPI.Repositories;
 
@@ -40,11 +41,6 @@ namespace wikiAPI.Controllers
             Console.WriteLine(includeEntries);
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
 
-            if (categoryToGet == null)
-            {
-                throw new Exception("Wiki category not found. Cannot fetch");
-            }
-
             return categoryToGet;
         }
 
@@ -55,7 +51,7 @@ namespace wikiAPI.Controllers
 
             if (categoryToUpdate == null)
             {
-                throw new Exception("Wiki cateogry not found. Cannot be updated");
+                throw new EntityNotFoundError("Wiki cateogry not found. Cannot be updated");
             }
 
             categoryToUpdate.Title = request.Title;
@@ -71,7 +67,7 @@ namespace wikiAPI.Controllers
 
             if (categoryToDelete == null)
             {
-                throw new Exception("Wiki category not found. Cannot be deleted");
+                throw new EntityNotFoundError("Wiki category not found. Cannot be deleted");
             }
 
             wikiRepository.DeleteCategory(categoryToDelete);

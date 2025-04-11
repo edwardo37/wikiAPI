@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using wikiAPI.Controllers.Requests;
+using wikiAPI.Exceptions;
 using wikiAPI.Models;
 using wikiAPI.Repositories;
 
@@ -33,7 +34,7 @@ namespace wikiAPI.Controllers
 
             if (entryToUpdate == null)
             {
-                throw new Exception("Wiki entry not found. Cannot be updated");
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
             }
 
             entryToUpdate.Title = request.Title;
@@ -51,7 +52,7 @@ namespace wikiAPI.Controllers
 
             if (entryToDelete == null)
             {
-                throw new Exception("Wiki entry not found. Cannot be deleted");
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
             }
 
             wikiRepository.DeleteEntry(entryToDelete);
