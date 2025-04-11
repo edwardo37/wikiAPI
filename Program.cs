@@ -1,14 +1,20 @@
 using Microsoft.EntityFrameworkCore;
+using wikiAPI.Configurations;
 using wikiAPI.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-// Add controllers and ignore recursive calls
-builder.Services.AddControllers().AddJsonOptions(options =>
+// Add controllers, ignore recursive calls, and don't automatically try to validate
+builder.Services.AddControllers()
+.AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles
-);
+)
+.ConfigureApiBehaviorOptions(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -22,6 +28,9 @@ builder.Services.AddDbContext<WikiDbContext>(options =>
 // Add EF implementation
 builder.Services.AddScoped<IWikiRepository, WikiCategoryEfImpl>();
 
+// Add Error Handling
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +39,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Use the custom error handler, with default settings
+app.UseExceptionHandler(_ => { });
 
 app.UseAuthorization();
 
