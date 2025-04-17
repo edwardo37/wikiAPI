@@ -16,6 +16,7 @@ namespace wikiAPI.Controllers
             wikiRepository = repository;
         }
 
+        // Create a new wiki entry in a category, specified by the category ID
         [HttpPost("", Name = "CreateWikiEntry")]
         public WikiEntry CreateWikiEntry([FromRoute] int CategoryID, WikiEntryCreateRequest request)
         {
@@ -33,6 +34,7 @@ namespace wikiAPI.Controllers
             return wikiRepository.CreateEntry(newWikiEntry);
         }
 
+        // Get all the entries in a category, by category ID
         [HttpGet("", Name = "GetWikiEntriesByCategoryID")]
         public List<WikiEntry>? GetWikiEntriesByCategoryID([FromRoute] int CategoryID)
         {

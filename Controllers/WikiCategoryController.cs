@@ -16,6 +16,7 @@ namespace wikiAPI.Controllers
             wikiRepository = repository;
         }
 
+        // Create a new wiki category
         [HttpPost("", Name = "CreateWikiCategory")]
         public WikiCategory CreateWikiCategory(WikiCategoryCreateRequest request)
         {
@@ -28,12 +29,14 @@ namespace wikiAPI.Controllers
             return wikiRepository.CreateCategory(newWikiCategory);
         }
 
+        // Get all wiki categories
         [HttpGet("", Name = "GetWikiCategories")]
         public List<WikiCategory> GetWikiCategories()
         {
             return wikiRepository.GetCategories();
         }
 
+        // Get a wiki category by its ID
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
@@ -48,6 +51,7 @@ namespace wikiAPI.Controllers
             return categoryToGet;
         }
 
+        // Update a wiki category by its ID
         [HttpPut("{CategoryID}", Name = "UpdateWikiCategory")]
         public WikiCategory? UpdateWikiCategory(int CategoryID, WikiCategoryCreateRequest request)
         {
@@ -64,6 +68,7 @@ namespace wikiAPI.Controllers
             return wikiRepository.UpdateCategory(categoryToUpdate);
         }
 
+        // Delete a wiki category by its ID
         [HttpDelete("{CategoryID}", Name = "DeleteWikiCategory")]
         public void DeleteWikiCategory(int CategoryID)
         {
