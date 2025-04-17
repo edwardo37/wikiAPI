@@ -24,21 +24,19 @@ namespace wikiAPI.Controllers
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
+        
+            WikiEntry newWikiEntry = new WikiEntry
             {
-                WikiEntry newWikiEntry = new WikiEntry
-                {
-                    Title = request.Title,
-                    Description = request.Description,
+                Title = request.Title,
+                Description = request.Description,
 
-                    Stats = request.Stats,
-                    Sections = request.Sections,
+                Stats = request.Stats,
+                Sections = request.Sections,
 
-                    WikiCategoryID = CategoryID
-                };
+                WikiCategoryID = CategoryID
+            };
 
-                return wikiRepository.CreateEntry(newWikiEntry);
-            }
+            return wikiRepository.CreateEntry(newWikiEntry);
         }
 
         [HttpGet("", Name = "GetWikiEntriesByCategoryID")]

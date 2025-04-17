@@ -34,22 +34,20 @@ namespace wikiAPI.Controllers
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
+        
+            WikiEntry? entryToUpdate = GetWikiEntry(EntryID);
+
+            if (entryToUpdate == null)
             {
-                WikiEntry? entryToUpdate = GetWikiEntry(EntryID);
-
-                if (entryToUpdate == null)
-                {
-                    throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
-                }
-
-                entryToUpdate.Title = request.Title;
-                entryToUpdate.Description = request.Title;
-                entryToUpdate.Sections = request.Sections;
-                entryToUpdate.Stats = request.Stats;
-
-                return wikiRepository.UpdateEntry(entryToUpdate);
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
             }
+
+            entryToUpdate.Title = request.Title;
+            entryToUpdate.Description = request.Title;
+            entryToUpdate.Sections = request.Sections;
+            entryToUpdate.Stats = request.Stats;
+
+            return wikiRepository.UpdateEntry(entryToUpdate);
         }
 
         [HttpDelete("{EntryID}", Name = "DeleteWikiEntry")]
@@ -59,17 +57,15 @@ namespace wikiAPI.Controllers
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
+            
+            WikiEntry? entryToDelete = GetWikiEntry(EntryID);
+
+            if (entryToDelete == null)
             {
-                WikiEntry? entryToDelete = GetWikiEntry(EntryID);
-
-                if (entryToDelete == null)
-                {
-                    throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
-                }
-
-                wikiRepository.DeleteEntry(entryToDelete);
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
             }
+
+            wikiRepository.DeleteEntry(entryToDelete);
         }
     }
 }

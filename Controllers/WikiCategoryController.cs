@@ -24,16 +24,14 @@ namespace wikiAPI.Controllers
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
+            
+            WikiCategory newWikiCategory = new WikiCategory
             {
-                WikiCategory newWikiCategory = new WikiCategory
-                {
-                    Title = request.Title,
-                    Description = request.Description
-                };
+                Title = request.Title,
+                Description = request.Description
+            };
 
-                return wikiRepository.CreateCategory(newWikiCategory);
-            }
+            return wikiRepository.CreateCategory(newWikiCategory);
         }
 
         [HttpGet("", Name = "GetWikiCategories")]
@@ -63,44 +61,40 @@ namespace wikiAPI.Controllers
         [HttpPut("{CategoryID}", Name = "UpdateWikiCategory")]
         public WikiCategory? UpdateWikiCategory(int CategoryID, WikiCategoryCreateRequest request)
         {
-            WikiCategory? categoryToUpdate = GetWikiCategory(CategoryID);
-
             if (!ModelState.IsValid)
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
+
+            WikiCategory? categoryToUpdate = GetWikiCategory(CategoryID);
+
+            if (categoryToUpdate == null)
             {
-                if (categoryToUpdate == null)
-                {
-                    throw new EntityNotFoundError("Wiki cateogry not found. Cannot be updated");
-                }
-
-                categoryToUpdate.Title = request.Title;
-                categoryToUpdate.Description = request.Description;
-
-                return wikiRepository.UpdateCategory(categoryToUpdate);
+                throw new EntityNotFoundError("Wiki cateogry not found. Cannot be updated");
             }
+
+            categoryToUpdate.Title = request.Title;
+            categoryToUpdate.Description = request.Description;
+
+            return wikiRepository.UpdateCategory(categoryToUpdate);
         }
 
         [HttpDelete("{CategoryID}", Name = "DeleteWikiCategory")]
         public void DeleteWikiCategory(int CategoryID)
         {
-            WikiCategory? categoryToDelete = GetWikiCategory(CategoryID);
-
             if (!ModelState.IsValid)
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            else
-            {
-                if (categoryToDelete == null)
-                {
-                    throw new EntityNotFoundError("Wiki category not found. Cannot be deleted");
-                }
 
-                wikiRepository.DeleteCategory(categoryToDelete);
+            WikiCategory? categoryToDelete = GetWikiCategory(CategoryID);
+            
+            if (categoryToDelete == null)
+            {
+                throw new EntityNotFoundError("Wiki category not found. Cannot be deleted");
             }
+
+            wikiRepository.DeleteCategory(categoryToDelete);
         }
     }
 }
