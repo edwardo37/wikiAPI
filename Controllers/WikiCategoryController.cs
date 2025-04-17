@@ -45,8 +45,17 @@ namespace wikiAPI.Controllers
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
-            Console.WriteLine(includeEntries);
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
+
+            if (categoryToGet == null)
+            {
+                throw new EntityNotFoundError("Wiki category not found");
+            }
 
             return categoryToGet;
         }
