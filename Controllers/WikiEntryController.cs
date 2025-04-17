@@ -24,7 +24,19 @@ namespace wikiAPI.Controllers
             [FromQuery] bool includeCategoryData = false
             )
         {
-            return wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+
+            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
+
+            if (wikiEntryToGet == null)
+            {
+                throw new EntityNotFoundError("Wiki entry not found");
+            }
+
+            return wikiEntryToGet;
         }
 
         [HttpPut("{EntryID}", Name = "UpdateWikiEntry")]
@@ -57,7 +69,7 @@ namespace wikiAPI.Controllers
             {
                 throw new InvalidInputError("Invalid input", ModelState);
             }
-            
+
             WikiEntry? entryToDelete = GetWikiEntry(EntryID);
 
             if (entryToDelete == null)
