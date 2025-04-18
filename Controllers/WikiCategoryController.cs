@@ -46,11 +46,6 @@ namespace wikiAPI.Controllers
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new InvalidInputError("Invalid input", ModelState);
-            }
-
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
 
             if (categoryToGet == null)
@@ -87,11 +82,6 @@ namespace wikiAPI.Controllers
         [HttpDelete("{CategoryID}", Name = "DeleteWikiCategory")]
         public void DeleteWikiCategory(int CategoryID)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new InvalidInputError("Invalid input", ModelState);
-            }
-
             WikiCategory? categoryToDelete = GetWikiCategory(CategoryID);
             
             if (categoryToDelete == null)

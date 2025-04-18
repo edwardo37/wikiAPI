@@ -25,11 +25,6 @@ namespace wikiAPI.Controllers
             [FromQuery] bool includeCategoryData = false
             )
         {
-            if (!ModelState.IsValid)
-            {
-                throw new InvalidInputError("Invalid input", ModelState);
-            }
-
             WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
 
             if (wikiEntryToGet == null)
@@ -68,11 +63,6 @@ namespace wikiAPI.Controllers
         [HttpDelete("{EntryID}", Name = "DeleteWikiEntry")]
         public void DeleteWikiEntry(int EntryID)
         {
-            if (!ModelState.IsValid)
-            {
-                throw new InvalidInputError("Invalid input", ModelState);
-            }
-
             WikiEntry? entryToDelete = GetWikiEntry(EntryID);
 
             if (entryToDelete == null)
