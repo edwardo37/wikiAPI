@@ -17,6 +17,7 @@ namespace wikiAPI.Controllers
             wikiRepository = repository;
         }
 
+        // Get wiki entry by an ID
         [HttpGet("{EntryID}", Name = "GetWikiEntry")]
         public WikiEntry? GetWikiEntry(
             int EntryID,
@@ -39,6 +40,7 @@ namespace wikiAPI.Controllers
             return wikiEntryToGet;
         }
 
+        // Update a wiki entry with an ID and the new data
         [HttpPut("{EntryID}", Name = "UpdateWikiEntry")]
         public WikiEntry? UpdateWikiEntry(int EntryID, WikiEntryCreateRequest request)
         {
@@ -62,6 +64,7 @@ namespace wikiAPI.Controllers
             return wikiRepository.UpdateEntry(entryToUpdate);
         }
 
+        // Delete an wiki entry by its ID
         [HttpDelete("{EntryID}", Name = "DeleteWikiEntry")]
         public void DeleteWikiEntry(int EntryID)
         {

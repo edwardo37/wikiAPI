@@ -17,6 +17,7 @@ namespace wikiAPI.Controllers
             wikiRepository = repository;
         }
 
+        // Create a new wiki entry in a category, specified by the category ID
         [HttpPost("", Name = "CreateWikiEntry")]
         public WikiEntry CreateWikiEntry([FromRoute] int CategoryID, WikiEntryCreateRequest request)
         {
