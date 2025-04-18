@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using wikiAPI.Controllers.Requests;
+using wikiAPI.Exceptions;
 using wikiAPI.Models;
 using wikiAPI.Repositories;
 
@@ -24,18 +25,30 @@ namespace wikiAPI.Controllers
             [FromQuery] bool includeCategoryData = false
             )
         {
-            return wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
+            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
+
+            if (wikiEntryToGet == null)
+            {
+                throw new EntityNotFoundError("Wiki entry not found");
+            }
+
+            return wikiEntryToGet;
         }
 
         // Update a wiki entry with an ID and the new data
         [HttpPut("{EntryID}", Name = "UpdateWikiEntry")]
         public WikiEntry? UpdateWikiEntry(int EntryID, WikiEntryCreateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+        
             WikiEntry? entryToUpdate = GetWikiEntry(EntryID);
 
             if (entryToUpdate == null)
             {
-                throw new Exception("Wiki entry not found. Cannot be updated");
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be updated");
             }
 
             entryToUpdate.Title = request.Title;
@@ -54,7 +67,7 @@ namespace wikiAPI.Controllers
 
             if (entryToDelete == null)
             {
-                throw new Exception("Wiki entry not found. Cannot be deleted");
+                throw new EntityNotFoundError("Wiki entry not found. Cannot be deleted");
             }
 
             wikiRepository.DeleteEntry(entryToDelete);

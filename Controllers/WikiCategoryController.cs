@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using wikiAPI.Controllers.Requests;
+using wikiAPI.Exceptions;
 using wikiAPI.Models;
 using wikiAPI.Repositories;
 
@@ -20,6 +21,11 @@ namespace wikiAPI.Controllers
         [HttpPost("", Name = "CreateWikiCategory")]
         public WikiCategory CreateWikiCategory(WikiCategoryCreateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+            
             WikiCategory newWikiCategory = new WikiCategory
             {
                 Title = request.Title,
@@ -40,12 +46,11 @@ namespace wikiAPI.Controllers
         [HttpGet("{CategoryID}", Name = "GetWikiCategory")]
         public WikiCategory? GetWikiCategory(int CategoryID, [FromQuery] bool includeEntries = false)
         {
-            Console.WriteLine(includeEntries);
             WikiCategory? categoryToGet = wikiRepository.GetCategoryByID(CategoryID, includeEntries);
 
             if (categoryToGet == null)
             {
-                throw new Exception("Wiki category not found. Cannot fetch");
+                throw new EntityNotFoundError("Wiki category not found");
             }
 
             return categoryToGet;
@@ -55,11 +60,16 @@ namespace wikiAPI.Controllers
         [HttpPut("{CategoryID}", Name = "UpdateWikiCategory")]
         public WikiCategory? UpdateWikiCategory(int CategoryID, WikiCategoryCreateRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+
             WikiCategory? categoryToUpdate = GetWikiCategory(CategoryID);
 
             if (categoryToUpdate == null)
             {
-                throw new Exception("Wiki cateogry not found. Cannot be updated");
+                throw new EntityNotFoundError("Wiki cateogry not found. Cannot be updated");
             }
 
             categoryToUpdate.Title = request.Title;
@@ -73,10 +83,10 @@ namespace wikiAPI.Controllers
         public void DeleteWikiCategory(int CategoryID)
         {
             WikiCategory? categoryToDelete = GetWikiCategory(CategoryID);
-
+            
             if (categoryToDelete == null)
             {
-                throw new Exception("Wiki category not found. Cannot be deleted");
+                throw new EntityNotFoundError("Wiki category not found. Cannot be deleted");
             }
 
             wikiRepository.DeleteCategory(categoryToDelete);
