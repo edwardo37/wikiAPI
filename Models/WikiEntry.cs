@@ -19,6 +19,7 @@ namespace wikiAPI.Models
         public int WikiCategoryID { get; set; }
 
         // For reference in code
+        [JsonIgnore]
         public WikiCategory? WikiCategory { get; set; }
     }
 }
