@@ -91,15 +91,6 @@ namespace wikiAPI.Repositories
             }
 
             return query.FirstOrDefault(wikiEntry => wikiEntry.ID == ID);
-
-        }
-
-        public List<WikiEntry>? GetEntriesByCategoryID(int CategoryID)
-        {
-            // Includes some stats as well
-            return dbContext.WikiEntries
-                .Where(wikiEntry => wikiEntry.WikiCategoryID == CategoryID)
-                .ToList();
         }
 
         public WikiEntry UpdateEntry(WikiEntry entry)

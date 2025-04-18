@@ -38,11 +38,5 @@ namespace wikiAPI.Controllers
 
             return wikiRepository.CreateEntry(newWikiEntry);
         }
-
-        [HttpGet("", Name = "GetWikiEntriesByCategoryID")]
-        public List<WikiEntry>? GetWikiEntriesByCategoryID([FromRoute] int CategoryID)
-        {
-            return wikiRepository.GetEntriesByCategoryID(CategoryID);
-        }
     }
 }

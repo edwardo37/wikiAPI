@@ -71,13 +71,6 @@ namespace wikiAPI.Repositories
         WikiEntry? GetEntryByID(int ID, bool includeStats, bool includeSections, bool includeCategoryData);
 
         /// <summary>
-        /// Get a list of entries matching a category ID
-        /// </summary>
-        /// <param name="CategoryID">The ID of the category to fetch</param>
-        /// <returns>A list of all entries in the category</returns>
-        List<WikiEntry>? GetEntriesByCategoryID(int CategoryID);
-
-        /// <summary>
         /// Update an entry
         /// </summary>
         /// <param name="entry">The entry to update</param>
