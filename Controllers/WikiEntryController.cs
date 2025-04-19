@@ -6,7 +6,6 @@ using wikiAPI.Repositories;
 
 namespace wikiAPI.Controllers
 {
-    [Route("/Wiki/Entries")]
     [ApiController]
     public class WikiEntryController : ControllerBase
     {
@@ -17,8 +16,31 @@ namespace wikiAPI.Controllers
             wikiRepository = repository;
         }
 
+        // Create a new wiki entry in a category, specified by the category ID
+        [HttpPost("/Wiki/Categories/{CategoryID}/Entries", Name = "CreateWikiEntry")]
+        public WikiEntry CreateWikiEntry([FromRoute] int CategoryID, WikiEntryCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+        
+            WikiEntry newWikiEntry = new WikiEntry
+            {
+                Title = request.Title,
+                Description = request.Description,
+
+                Stats = request.Stats,
+                Sections = request.Sections,
+
+                WikiCategoryID = CategoryID
+            };
+
+            return wikiRepository.CreateEntry(newWikiEntry);
+        }
+
         // Get wiki entry by an ID
-        [HttpGet("{EntryID}", Name = "GetWikiEntry")]
+        [HttpGet("/Wiki/Entries/{EntryID}", Name = "GetWikiEntry")]
         public WikiEntry? GetWikiEntry(
             int EntryID,
             [FromQuery] bool includeStats = true, [FromQuery] bool includeSections = true,
@@ -36,7 +58,7 @@ namespace wikiAPI.Controllers
         }
 
         // Update a wiki entry with an ID and the new data
-        [HttpPut("{EntryID}", Name = "UpdateWikiEntry")]
+        [HttpPut("/Wiki/Entries/{EntryID}", Name = "UpdateWikiEntry")]
         public WikiEntry? UpdateWikiEntry(int EntryID, WikiEntryCreateRequest request)
         {
             if (!ModelState.IsValid)
@@ -60,7 +82,7 @@ namespace wikiAPI.Controllers
         }
 
         // Delete an wiki entry by its ID
-        [HttpDelete("{EntryID}", Name = "DeleteWikiEntry")]
+        [HttpDelete("/Wiki/Entries/{EntryID}", Name = "DeleteWikiEntry")]
         public void DeleteWikiEntry(int EntryID)
         {
             WikiEntry? entryToDelete = GetWikiEntry(EntryID);
