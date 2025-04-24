@@ -31,7 +31,10 @@ namespace wikiAPI.Controllers
                 Description = request.Description,
 
                 Stats = request.Stats,
-                Sections = request.Sections,
+
+                // Initialized with empty sections
+                Sections = [],
+                // Sections = request.Sections,
 
                 WikiCategoryID = CategoryID
             };
@@ -75,7 +78,7 @@ namespace wikiAPI.Controllers
 
             entryToUpdate.Title = request.Title;
             entryToUpdate.Description = request.Title;
-            entryToUpdate.Sections = request.Sections;
+            // entryToUpdate.Sections = request.Sections;
             entryToUpdate.Stats = request.Stats;
 
             return wikiRepository.UpdateEntry(entryToUpdate);

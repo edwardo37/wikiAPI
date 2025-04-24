@@ -12,8 +12,8 @@ namespace wikiAPI.Controllers.Requests
         [MaxLength(512, ErrorMessage = "A short description must be less than 512 characters")]
         public string? Description { get; set; }
 
-        [Required(ErrorMessage = "Every entry must have at least 1 section")]
-        public required List<WikiSection> Sections { get; set; }
+        // [Required(ErrorMessage = "Every entry must have at least 1 section")]
+        // public required List<WikiSection> Sections { get; set; }
 
         public List<WikiStat>? Stats { get; set; }
     }

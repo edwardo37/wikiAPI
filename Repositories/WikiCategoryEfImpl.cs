@@ -104,5 +104,22 @@ namespace wikiAPI.Repositories
             dbContext.WikiEntries.Remove(entry);
             dbContext.SaveChanges();
         }
+
+
+        // SECTIONS
+
+        public WikiSection CreateSection(WikiSection section)
+        {
+            dbContext.WikiSections.Add(section);
+            dbContext.SaveChanges();
+            return section;
+        }
+
+        public List<WikiSection> GetEntrySections(WikiEntry entry)
+        {
+            return dbContext.WikiSections
+                .Where(wikiSection => wikiSection.WikiEntryID == entry.ID)
+                .ToList();
+        }
     }
 }

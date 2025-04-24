@@ -18,7 +18,7 @@ namespace wikiAPI.Repositories
         /// <param name="category">The category to save</param>
         /// <returns>The category saved</returns>
         WikiCategory CreateCategory(WikiCategory category);
-        
+
         /// <summary>
         /// Get a specific category
         /// </summary>
@@ -46,7 +46,7 @@ namespace wikiAPI.Repositories
         /// <param name="category">The category to delete</param>
         void DeleteCategory(WikiCategory category);
 
-        
+
         // ENTRIES
 
         /// <summary>
@@ -84,6 +84,23 @@ namespace wikiAPI.Repositories
         /// </summary>
         /// <param name="entry">The entry to delete</param>
         void DeleteEntry(WikiEntry entry);
+
+
+        // SECTIONS
+
+        /// <summary>
+        /// Create a new section
+        /// </summary>
+        /// <param name="Section">The section to register</param>
+        /// <returns>The newly created section</returns>
+        WikiSection CreateSection(WikiSection Section);
+
+        /// <summary>
+        /// Get all sections in an entry
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns>A list of stats</returns>
+        List<WikiSection> GetEntrySections(WikiEntry entry);
     }
     
 }
