@@ -74,7 +74,7 @@ namespace wikiAPI.Controllers
             }
 
             entryToUpdate.Title = request.Title;
-            entryToUpdate.Description = request.Title;
+            entryToUpdate.Description = request.Description;
 
             return wikiRepository.UpdateEntry(entryToUpdate);
         }
