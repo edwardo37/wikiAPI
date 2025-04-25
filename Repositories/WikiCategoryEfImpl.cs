@@ -71,7 +71,7 @@ namespace wikiAPI.Repositories
             return dbContext.WikiEntries.ToList();
         }
 
-        public WikiEntry? GetEntryByID(int ID, bool includeStats, bool includeSections, bool includeCategoryData)
+        public WikiEntry? GetEntryByID(int ID, bool includeStats, bool includeSections)
         {
             var query = dbContext.WikiEntries.AsQueryable();
 
@@ -83,11 +83,6 @@ namespace wikiAPI.Repositories
             if (includeSections)
             {
                 query = query.Include(wikiEntry => wikiEntry.Sections);
-            }
-
-            if (includeCategoryData)
-            {
-                query = query.Include(wikiEntry => wikiEntry.WikiCategory);
             }
 
             return query.FirstOrDefault(wikiEntry => wikiEntry.ID == ID);

@@ -68,9 +68,8 @@ namespace wikiAPI.Repositories
         /// <param name="ID">The ID of entry to fetch</param>
         /// <param name="includeStats">Wether to include info about the entry's stats</param>
         /// <param name="includeSections">Wether to include info about the entry's sections</param>
-        /// <param name="includeCategoryData">Wether to include info about the containing category</param>
         /// <returns>The entry, null if not found</returns>
-        WikiEntry? GetEntryByID(int ID, bool includeStats, bool includeSections, bool includeCategoryData);
+        WikiEntry? GetEntryByID(int ID, bool includeStats, bool includeSections);
 
         /// <summary>
         /// Update an entry

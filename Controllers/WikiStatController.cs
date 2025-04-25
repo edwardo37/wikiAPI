@@ -38,7 +38,7 @@ namespace wikiAPI.Controllers
         public List<WikiStat> GetWikiStatsInEntry(int EntryID)
         {
             // First, find the wiki entry by ID
-            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, false, false, false);
+            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, false, false);
 
             // If the entry is not found, throw an error
             if (wikiEntryToGet == null)

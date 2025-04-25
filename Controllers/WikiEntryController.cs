@@ -44,11 +44,10 @@ namespace wikiAPI.Controllers
         [HttpGet("/Wiki/Entries/{EntryID}", Name = "GetWikiEntry")]
         public WikiEntry? GetWikiEntry(
             int EntryID,
-            [FromQuery] bool includeStats = true, [FromQuery] bool includeSections = true,
-            [FromQuery] bool includeCategoryData = false
+            [FromQuery] bool includeStats = true, [FromQuery] bool includeSections = true
             )
         {
-            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, includeStats, includeSections, includeCategoryData);
+            WikiEntry? wikiEntryToGet = wikiRepository.GetEntryByID(EntryID, includeStats, includeSections);
 
             if (wikiEntryToGet == null)
             {
