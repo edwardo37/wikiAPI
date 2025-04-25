@@ -145,5 +145,18 @@ namespace wikiAPI.Repositories
         /// <param name="entry">The entry to list stats from</param>
         /// <returns>A list of stats</returns>
         List<WikiStat> GetEntryStats(WikiEntry entry);
+
+        /// <summary>
+        /// Update a stat
+        /// </summary>
+        /// <param name="stat">Stat to update</param>
+        /// <returns>Updated stat</returns>
+        WikiStat UpdateStat(WikiStat stat);
+
+        /// <summary>
+        /// Delete a stat
+        /// </summary>
+        /// <param name="stat">Stat to delete</param>
+        void DeleteStat(WikiStat stat);
     }
 }

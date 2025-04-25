@@ -49,5 +49,39 @@ namespace wikiAPI.Controllers
             // If the entry is found, return its stats
             return wikiRepository.GetEntryStats(wikiEntryToGet);
         }
+
+        [HttpPut("/Wiki/Stats/{StatID}", Name = "UpdateWikiStat")]
+        public WikiStat UpdateWikiStat([FromRoute] int StatID, WikiStatCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+
+            WikiStat? wikiStatToUpdate = wikiRepository.GetStatByID(StatID);
+
+            if (wikiStatToUpdate == null)
+            {
+                throw new EntityNotFoundError("Wiki stat not found");
+            }
+
+            wikiStatToUpdate.Key = request.Key;
+            wikiStatToUpdate.Val = request.Val;
+
+            return wikiRepository.UpdateStat(wikiStatToUpdate);
+        }
+
+        [HttpDelete("/Wiki/Stats/{StatID}", Name = "DeleteWikiStat")]
+        public void DeleteWikiStat([FromRoute] int StatID)
+        {
+            WikiStat? wikiStatToDelete = wikiRepository.GetStatByID(StatID);
+
+            if (wikiStatToDelete == null)
+            {
+                throw new EntityNotFoundError("Wiki stat not found");
+            }
+
+            wikiRepository.DeleteStat(wikiStatToDelete);
+        }
     }
 }
