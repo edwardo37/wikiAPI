@@ -19,7 +19,11 @@ builder.Services.AddSwaggerGen();
 
 // Db Context
 builder.Services.AddDbContext<WikiDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    // Use SQL Server
+    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+
+    // Use PostgreSQL
+    options.UseNpgsql("Host=localhost;Port=5432;Database=wikiAPIDB-Postgre;Username=postgres;Password=postgres")
 );
 
 // Add EF implementation
