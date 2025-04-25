@@ -155,5 +155,17 @@ namespace wikiAPI.Repositories
                 .Where(wikiStat => wikiStat.WikiEntryID == entry.ID)
                 .ToList();
         }
+
+        public WikiStat UpdateStat(WikiStat stat)
+        {
+            dbContext.SaveChanges();
+            return stat;
+        }
+
+        public void DeleteStat(WikiStat stat)
+        {
+            dbContext.WikiStats.Remove(stat);
+            dbContext.SaveChanges();
+        }
     }
 }
