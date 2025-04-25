@@ -49,5 +49,45 @@ namespace wikiAPI.Controllers
             // If the entry is found, return its sections
             return wikiRepository.GetEntrySections(wikiEntryToGet);
         }
+
+        [HttpPut("/Wiki/Sections/{SectionID}", Name = "UpdateWikiSection")]
+        public WikiSection UpdateWikiSection([FromRoute] int SectionID, WikiSectionCreateRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                throw new InvalidInputError("Invalid input", ModelState);
+            }
+
+            // Find the section by ID
+            WikiSection? wikiSectionToUpdate = wikiRepository.GetSectionByID(SectionID);
+
+            // If the section is not found, throw an error
+            if (wikiSectionToUpdate == null)
+            {
+                throw new EntityNotFoundError("Wiki section not found");
+            }
+
+            // Update the section's properties
+            wikiSectionToUpdate.Header = request.Header;
+            wikiSectionToUpdate.Bodies = request.Bodies;
+
+            return wikiRepository.UpdateSection(wikiSectionToUpdate);
+        }
+
+        [HttpDelete("/Wiki/Sections/{SectionID}", Name = "DeleteWikiSection")]
+        public void DeleteWikiSection([FromRoute] int SectionID)
+        {
+            // Find the section by ID
+            WikiSection? wikiSectionToDelete = wikiRepository.GetSectionByID(SectionID);
+
+            // If the section is not found, throw an error
+            if (wikiSectionToDelete == null)
+            {
+                throw new EntityNotFoundError("Wiki section not found");
+            }
+
+            // Delete the section
+            wikiRepository.DeleteSection(wikiSectionToDelete);
+        }
     }
 }

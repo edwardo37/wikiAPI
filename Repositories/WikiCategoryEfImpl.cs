@@ -115,11 +115,29 @@ namespace wikiAPI.Repositories
             return section;
         }
 
+        public WikiSection? GetSectionByID(int ID)
+        {
+            return dbContext.WikiSections
+                .FirstOrDefault(wikiSection => wikiSection.ID == ID);
+        }
+
         public List<WikiSection> GetEntrySections(WikiEntry entry)
         {
             return dbContext.WikiSections
                 .Where(wikiSection => wikiSection.WikiEntryID == entry.ID)
                 .ToList();
+        }
+
+        public WikiSection UpdateSection(WikiSection section)
+        {
+            dbContext.SaveChanges();
+            return section;
+        }
+
+        public void DeleteSection(WikiSection section)
+        {
+            dbContext.WikiSections.Remove(section);
+            dbContext.SaveChanges();
         }
     }
 }

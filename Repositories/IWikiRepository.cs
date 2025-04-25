@@ -96,11 +96,31 @@ namespace wikiAPI.Repositories
         WikiSection CreateSection(WikiSection Section);
 
         /// <summary>
+        /// Get a section by its ID
+        /// </summary>
+        /// <param name="ID">The ID of the Section to Get</param>
+        /// <returns>The section -- null if nonexistant</returns>
+        WikiSection? GetSectionByID(int ID);
+
+        /// <summary>
         /// Get all sections in an entry
         /// </summary>
         /// <param name="entry"></param>
         /// <returns>A list of stats</returns>
         List<WikiSection> GetEntrySections(WikiEntry entry);
+
+        /// <summary>
+        /// Update a section
+        /// </summary>
+        /// <param name="section">The section to update</param>
+        /// <returns>The section updated</returns>
+        WikiSection UpdateSection(WikiSection section);
+
+        /// <summary>
+        /// Delete a section
+        /// </summary>
+        /// <param name="section">The section to delete</param>
+        void DeleteSection(WikiSection section);
     }
     
 }
