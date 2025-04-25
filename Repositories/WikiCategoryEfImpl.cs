@@ -139,5 +139,26 @@ namespace wikiAPI.Repositories
             dbContext.WikiSections.Remove(section);
             dbContext.SaveChanges();
         }
+
+
+        // STATS
+
+        public WikiStat CreateStat(WikiStat stat)
+        {
+            dbContext.WikiStats.Add(stat);
+            dbContext.SaveChanges();
+            return stat;
+        }
+        public WikiStat? GetStatByID(int ID)
+        {
+            return dbContext.WikiStats
+                .FirstOrDefault(wikiStat => wikiStat.ID == ID);
+        }
+        public List<WikiStat> GetEntryStats(WikiEntry entry)
+        {
+            return dbContext.WikiStats
+                .Where(wikiStat => wikiStat.WikiEntryID == entry.ID)
+                .ToList();
+        }
     }
 }

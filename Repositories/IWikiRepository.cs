@@ -121,6 +121,29 @@ namespace wikiAPI.Repositories
         /// </summary>
         /// <param name="section">The section to delete</param>
         void DeleteSection(WikiSection section);
+
+
+        // STATS
+
+        /// <summary>
+        /// Create a new stat
+        /// </summary>
+        /// <param name="stat">The stat to create</param>
+        /// <returns>The newly created stat</returns>
+        WikiStat CreateStat(WikiStat stat);
+
+        /// <summary>
+        /// Get a stat by its ID
+        /// </summary>
+        /// <param name="ID">The ID of the of the stat to get</param>
+        /// <returns>The stat fetched</returns>
+        WikiStat? GetStatByID(int ID);
+
+        /// <summary>
+        /// Get all stats in an entry
+        /// </summary>
+        /// <param name="entry">The entry to list stats from</param>
+        /// <returns>A list of stats</returns>
+        List<WikiStat> GetEntryStats(WikiEntry entry);
     }
-    
 }

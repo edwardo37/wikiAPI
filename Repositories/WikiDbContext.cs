@@ -10,5 +10,6 @@ namespace wikiAPI.Repositories
         public DbSet<WikiCategory> WikiCategories { get; set; }
         public DbSet<WikiEntry> WikiEntries { get; set; }
         public DbSet<WikiSection> WikiSections { get; set; }
+        public DbSet<WikiStat> WikiStats { get; set; }
     }
 }
