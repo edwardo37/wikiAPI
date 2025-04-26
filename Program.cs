@@ -20,10 +20,14 @@ builder.Services.AddSwaggerGen();
 // Db Context
 builder.Services.AddDbContext<WikiDbContext>(options =>
     // Use SQL Server
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
     // Use PostgreSQL
-    options.UseNpgsql("Host=localhost;Port=5432;Database=wikiAPIDB-Postgre;Username=postgres;Password=postgres")
+
+    // You should change the connection settings in appsettings
+    // before using them in prod, they have VERY default values.
+    // Also, don't forget to change the authentication method to md5
+    // options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"))
 );
 
 // Add EF implementation
