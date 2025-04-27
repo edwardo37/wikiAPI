@@ -23,10 +23,8 @@ builder.Services.AddDbContext<WikiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 
     // Use PostgreSQL
-
-    // You should change the connection settings in appsettings
-    // before using them in prod, they have VERY default values.
-    // Also, don't forget to change the authentication method to md5
+    // Don't forget to change the authentication method to md5,
+    // and maybe don't have a plaintext password?
     // options.UseNpgsql(builder.Configuration.GetConnectionString("PostgresConnection"))
 );
 
